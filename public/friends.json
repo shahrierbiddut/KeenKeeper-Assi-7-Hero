@@ -6,7 +6,7 @@
         "email": "hasan.mahmud@gmail.com",
         "days_since_contact": 18,
         "status": "Overdue",
-        "tags": ["School", "Close Friend"],
+        "tags": ["School Close Friend"],
         "bio": "We studied together in high school in Gazipur. Used to play cricket every afternoon.",
         "goal": 14,
         "next_due_date": "2026-03-28"
@@ -19,7 +19,7 @@
         "email": "nusrat.jahan@gmail.com",
         "days_since_contact": 10,
         "status": "Almost Due",
-        "tags": ["University", "Project Partner"],
+        "tags": ["University Project Partner"],
         "bio": "We worked together on university assignments. She is very creative and always brings unique ideas to projects.",
         "goal": 12,
         "next_due_date": "2026-04-17"
@@ -32,7 +32,7 @@
         "email": "shakil.ahmed@yahoo.com",
         "days_since_contact": 5,
         "status": "On-Track",
-        "tags": ["Office", "Colleague"],
+        "tags": ["Office Colleague"],
         "bio": "Colleague from my first internship. We often discuss tech trends and startups.",
         "goal": 14,
         "next_due_date": "2026-04-24"
@@ -45,7 +45,7 @@
         "email": "rashed.khan@gmail.com",
         "days_since_contact": 20,
         "status": "Overdue",
-        "tags": ["Neighbor", "Family Friend"],
+        "tags": ["Neighbor Family Friend"],
         "bio": "Grew up in the same neighborhood. Our families are very close.",
         "goal": 15,
         "next_due_date": "2026-03-30"
@@ -58,7 +58,7 @@
         "email": "sadia.islam@gmail.com",
         "days_since_contact": 11,
         "status": "Almost Due",
-        "tags": ["Gym", "Fitness Buddy"],
+        "tags": ["Gym Fitness Buddy"],
         "bio": "Met at the gym. She is very disciplined and encourages me to stay consistent with fitness goals.",
         "goal": 12,
         "next_due_date": "2026-04-16"
@@ -71,7 +71,7 @@
         "email": "fahim.c@gmail.com",
         "days_since_contact": 3,
         "status": "On-Track",
-        "tags": ["Online Friend", "Design"],
+        "tags": ["Online Friend"],
         "bio": "Connected through a UI/UX design community. We share feedback on each other's work.",
         "goal": 10,
         "next_due_date": "2026-04-22"
@@ -84,7 +84,7 @@
         "email": "sohan.hossain@gmail.com",
         "days_since_contact": 16,
         "status": "Overdue",
-        "tags": ["Football", "Childhood"],
+        "tags": ["Friend Childhood"],
         "bio": "Childhood football teammate. Haven’t caught up properly in a long time.",
         "goal": 14,
         "next_due_date": "2026-04-01"
@@ -97,7 +97,7 @@
         "email": "farzana.rahman@gmail.com",
         "days_since_contact": 8,
         "status": "On-Track",
-        "tags": ["Mentor", "Career"],
+        "tags": ["Mentor Career"],
         "bio": "A senior mentor who guides me in career planning and professional development.",
         "goal": 14,
         "next_due_date": "2026-04-21"
@@ -110,7 +110,7 @@
         "email": "arafat.karim@gmail.com",
         "days_since_contact": 13,
         "status": "Almost Due",
-        "tags": ["Startup", "Business"],
+        "tags": ["Startup Business"],
         "bio": "Met at a startup networking event. We often exchange ideas about business and innovation.",
         "goal": 14,
         "next_due_date": "2026-04-18"
@@ -123,7 +123,7 @@
         "email": "rifat.sarkar@gmail.com",
         "days_since_contact": 21,
         "status": "Overdue",
-        "tags": ["Cousin", "Family"],
+        "tags": ["Cousin Family"],
         "bio": "My cousin from Dhaka. We used to visit each other frequently during holidays.",
         "goal": 14,
         "next_due_date": "2026-03-25"
@@ -136,7 +136,7 @@
         "email": "tania.akter@gmail.com",
         "days_since_contact": 7,
         "status": "On-Track",
-        "tags": ["Freelance", "Client"],
+        "tags": ["Freelance Client"],
         "bio": "We collaborate on freelance design projects. She has a strong sense of UI/UX aesthetics.",
         "goal": 10,
         "next_due_date": "2026-04-23"
@@ -149,7 +149,7 @@
         "email": "ashiqur.rahman@yahoo.com",
         "days_since_contact": 15,
         "status": "Almost Due",
-        "tags": ["Travel", "Friend"],
+        "tags": ["Travel Friend"],
         "bio": "Travel buddy. We explored Cox’s Bazar and Sylhet together last year.",
         "goal": 14,
         "next_due_date": "2026-04-19"

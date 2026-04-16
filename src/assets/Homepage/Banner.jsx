@@ -24,7 +24,7 @@ const Banner = () => {
             </div>
 
             {/* Cards Section */}
-            <div className='max-w-[80%] mx-auto grid md:grid-cols-4 grid-cols-2 gap-8 my-10'>
+            <div className='max-w-7xl mx-auto px-6 grid md:grid-cols-4 grid-cols-2 gap-8 my-10 '>
                 
                 {/* Card 1 */}
                 <div className='rounded-xl shadow-md ring-1 ring-black/5 
@@ -73,7 +73,7 @@ const Banner = () => {
                 </div>
             </div>
 
-            <p className='max-w-[80%] mx-auto border-b border-gray-300'></p>
+            <div className='max-w-7xl mx-auto px-6 border-b border-gray-200 my-6'></div>
         </div>
     );
 };

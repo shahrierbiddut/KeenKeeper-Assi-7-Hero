@@ -12,7 +12,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center text-2xl font-bold text-gray-800">
+          <Link to="/" className="flex items-center text-3xl font-bold text-gray-800">
             <span className="font-bold text-black">Keen</span>
             <span className="font-semibold text-[#244D3F]">Keeper</span>
           </Link>
