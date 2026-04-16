@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { MdCall, MdMessage, MdVideoCall } from "react-icons/md";
 
 export default function FriendDetail() {
   const { id } = useParams();
@@ -55,6 +56,18 @@ export default function FriendDetail() {
     );
   }
 
+  const handleCheckIn = (type) => {
+    // Add timeline entry for the check-in
+    const timelineEntry = {
+      id: Date.now(),
+      friendId: friend.id,
+      type: type,
+      timestamp: new Date().toISOString(),
+    };
+    console.log("Check-in recorded:", timelineEntry);
+    // TODO: Send to Timeline page or update timeline
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-6">
       <div className="max-w-6xl mx-auto">
@@ -66,117 +79,163 @@ export default function FriendDetail() {
           ← Back
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Friend Info Card */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            {/* Profile Picture */}
-            <div className="flex justify-center mb-6">
-              <img
-                src={friend.picture}
-                alt={friend.name}
-                className="w-40 h-40 rounded-full object-cover border-4 border-gray-200"
-              />
-            </div>
-
-            {/* Name */}
-            <h1 className="text-3xl font-bold text-gray-900 text-center mb-2">
-              {friend.name}
-            </h1>
-
-            {/* Age */}
-            {friend.age && (
-              <p className="text-center text-gray-600 mb-4">Age: {friend.age}</p>
-            )}
-
-            {/* Status */}
-            <div className="flex justify-center mb-6">
-              <button
-                className={`px-6 py-2 rounded-full text-lg font-semibold ${getStatusColor(
-                  friend.status
-                )}`}
-                disabled
-              >
-                {friend.status}
-              </button>
-            </div>
-
-            {/* Tags */}
-            <div className="mb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {friend.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold"
-                  >
-                    {tag}
-                  </span>
-                ))}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
+              {/* Profile Picture */}
+              <div className="flex justify-center mb-6">
+                <img
+                  src={friend.picture}
+                  alt={friend.name}
+                  className="w-32 h-32 rounded-full object-cover border-4 border-gray-200"
+                />
               </div>
-            </div>
 
-            {/* Bio */}
-            <div className="mb-6">
-              <h3 className="font-semibold text-gray-900 mb-2">Bio</h3>
-              <p className="text-gray-700 leading-relaxed">{friend.bio}</p>
-            </div>
+              {/* Name */}
+              <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">
+                {friend.name}
+              </h1>
 
-            {/* Email */}
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-              <p className="text-gray-700 break-all">
-                <a href={`mailto:${friend.email}`} className="text-blue-500 hover:underline">
+              {/* Status */}
+              <div className="flex justify-center mb-4">
+                <button
+                  className={`px-4 py-1 rounded-full text-sm font-semibold ${getStatusColor(
+                    friend.status
+                  )}`}
+                  disabled
+                >
+                  {friend.status}
+                </button>
+              </div>
+
+              {/* Tags */}
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {friend.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold uppercase"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bio */}
+              <div className="mb-4 border-t pt-4">
+                <p className="text-gray-600 text-sm italic text-center">
+                  "{friend.bio}"
+                </p>
+              </div>
+
+              {/* Email */}
+              <div className="text-center border-t pt-4">
+                <p className="text-gray-500 text-xs mb-1">Preferred: email</p>
+                <a
+                  href={`mailto:${friend.email}`}
+                  className="text-gray-700 text-sm hover:text-blue-500 break-all"
+                >
                   {friend.email}
                 </a>
-              </p>
-            </div>
-          </div>
-
-          {/* Right Column - Additional Info */}
-          <div className="space-y-6">
-            {/* Days Since Contact Card */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Contact Status
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-gray-600">Days Since Last Contact</p>
-                  <p className="text-4xl font-bold text-blue-500">
-                    {friend.days_since_contact}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-600">Contact Goal (days)</p>
-                  <p className="text-4xl font-bold text-green-500">
-                    {friend.goal}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-600">Next Due Date</p>
-                  <p className="text-xl font-semibold text-gray-900">
-                    {new Date(friend.next_due_date).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }
-                    )}
-                  </p>
-                </div>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Actions</h2>
-              <button className="w-full mb-3 bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
-                Mark as Contacted
+            <div className="space-y-3">
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-gray-800 rounded-lg shadow hover:shadow-md transition border border-gray-200">
+                <span>⏰</span>
+                Snooze 2 Weeks
               </button>
-              <button className="w-full bg-gray-300 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-400 transition">
-                Edit Friend
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-gray-800 rounded-lg shadow hover:shadow-md transition border border-gray-200">
+                <span>📦</span>
+                Archive
               </button>
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-red-600 rounded-lg shadow hover:shadow-md transition border border-red-200">
+                <span>🗑️</span>
+                Delete
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column - Stats & Actions */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-white rounded-lg shadow p-4 text-center">
+                <p className="text-sm text-gray-600 mb-2">Days Since Contact</p>
+                <p className="text-3xl font-bold text-blue-600">
+                  {friend.days_since_contact}
+                </p>
+              </div>
+              <div className="bg-white rounded-lg shadow p-4 text-center">
+                <p className="text-sm text-gray-600 mb-2">Goal (Days)</p>
+                <p className="text-3xl font-bold text-green-600">
+                  {friend.goal}
+                </p>
+              </div>
+              <div className="bg-white rounded-lg shadow p-4 text-center">
+                <p className="text-sm text-gray-600 mb-2">Next Due</p>
+                <p className="text-lg font-bold text-gray-900">
+                  {new Date(friend.next_due_date).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+            </div>
+
+            {/* Relationship Goal Card */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Relationship Goal
+                </h3>
+                <button className="text-sm text-blue-600 hover:text-blue-700 font-semibold">
+                  Edit
+                </button>
+              </div>
+              <p className="text-gray-700">
+                Connect every <span className="font-bold">{friend.goal} days</span>
+              </p>
+            </div>
+
+            {/* Quick Check-In Card */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Quick Check-In
+              </h3>
+              <div className="grid grid-cols-3 gap-4">
+                <button
+                  onClick={() => handleCheckIn("call")}
+                  className="flex flex-col items-center justify-center py-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition border border-gray-200"
+                >
+                  <MdCall size={32} className="text-blue-600 mb-2" />
+                  <span className="text-sm font-semibold text-gray-800">
+                    Call
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleCheckIn("text")}
+                  className="flex flex-col items-center justify-center py-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition border border-gray-200"
+                >
+                  <MdMessage size={32} className="text-green-600 mb-2" />
+                  <span className="text-sm font-semibold text-gray-800">
+                    Text
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleCheckIn("video")}
+                  className="flex flex-col items-center justify-center py-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition border border-gray-200"
+                >
+                  <MdVideoCall size={32} className="text-purple-600 mb-2" />
+                  <span className="text-sm font-semibold text-gray-800">
+                    Video
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
