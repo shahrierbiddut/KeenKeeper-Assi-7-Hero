@@ -8,7 +8,8 @@ import QuickCheckIn from "./QuickCheckIn";
 import Toast from "../Component/Toast";
 
 export default function FriendDetailsView() {
-  const { id } = useParams();
+  const params = useParams();
+  const id = params.id;
   const navigate = useNavigate();
   const [friend, setFriend] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,8 +18,11 @@ export default function FriendDetailsView() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
+        // Fetch all friends from JSON file
         const response = await fetch("/friends.json");
         const data = await response.json();
+        
+        // Find the friend with matching ID
         const foundFriend = data.find((f) => f.id === parseInt(id));
         setFriend(foundFriend);
         setLoading(false);
@@ -32,20 +36,19 @@ export default function FriendDetailsView() {
   }, [id]);
 
   const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case "overdue":
-        return "bg-red-500 text-white";
-      case "on-track":
-        return "bg-gray-800 text-white";
-      case "almost due":
-        return "bg-yellow-400 text-gray-800";
-      default:
-        return "bg-gray-300 text-gray-800";
+    const lowerStatus = status.toLowerCase();
+    if (lowerStatus === "overdue") {
+      return "bg-red-500 text-white";
+    } else if (lowerStatus === "on-track") {
+      return "bg-gray-800 text-white";
+    } else if (lowerStatus === "almost due") {
+      return "bg-yellow-400 text-gray-800";
+    } else {
+      return "bg-gray-300 text-gray-800";
     }
   };
 
   const handleCheckIn = (type) => {
-    // Show toast notification
     setToast({
       message: `✓ ${type.charAt(0).toUpperCase() + type.slice(1)} added to timeline!`,
       type: "success",
@@ -79,7 +82,6 @@ export default function FriendDetailsView() {
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Back Button */}
         <button
           onClick={() => navigate("/")}
           className="mb-8 px-3 py-1 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium"
@@ -88,13 +90,11 @@ export default function FriendDetailsView() {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Friend Info Card */}
           <div className="lg:col-span-1">
             <FriendInfoCard friend={friend} getStatusColor={getStatusColor} />
             <ActionButtons />
           </div>
 
-          {/* Right Column - Stats & Actions */}
           <div className="lg:col-span-2 space-y-6">
             <StatsCards friend={friend} />
             <RelationshipGoal friend={friend} />
@@ -103,7 +103,6 @@ export default function FriendDetailsView() {
         </div>
       </div>
 
-      {/* Toast Notification */}
       {toast && (
         <Toast
           message={toast.message}

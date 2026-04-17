@@ -5,51 +5,54 @@ export default function Stats() {
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Colors for the pie chart
   const COLORS = {
-    call: "#3B82F6",      // Blue
-    text: "#10B981",      // Green
-    video: "#A855F7",     // Purple
+    call: "#3B82F6",
+    text: "#10B981",
+    video: "#A855F7",
   };
 
   useEffect(() => {
-    // Load timeline data from localStorage
     const savedTimeline = localStorage.getItem("timeline");
     if (savedTimeline) {
       const timeline = JSON.parse(savedTimeline);
-
-      // Count interactions by type
+      
       const counts = {
         call: 0,
         text: 0,
         video: 0,
       };
 
-      timeline.forEach((entry) => {
+      for (let i = 0; i < timeline.length; i++) {
+        const entry = timeline[i];
         const type = entry.type.toLowerCase();
-        if (type in counts) {
-          counts[type]++;
+        if (type === "call") {
+          counts.call = counts.call + 1;
+        } else if (type === "text") {
+          counts.text = counts.text + 1;
+        } else if (type === "video") {
+          counts.video = counts.video + 1;
         }
-      });
+      }
 
-      // Format data for pie chart
-      const data = [
-        {
-          name: "Call",
-          value: counts.call,
-          color: COLORS.call,
-        },
-        {
-          name: "Text",
-          value: counts.text,
-          color: COLORS.text,
-        },
-        {
-          name: "Video",
-          value: counts.video,
-          color: COLORS.video,
-        },
-      ];
+      const dataObject1 = {
+        name: "Call",
+        value: counts.call,
+        color: COLORS.call,
+      };
+      
+      const dataObject2 = {
+        name: "Text",
+        value: counts.text,
+        color: COLORS.text,
+      };
+      
+      const dataObject3 = {
+        name: "Video",
+        value: counts.video,
+        color: COLORS.video,
+      };
+
+      const data = [dataObject1, dataObject2, dataObject3];
 
       setChartData(data);
     }
@@ -67,14 +70,11 @@ export default function Stats() {
   return (
     <div className="bg-gray-50 py-8 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Page Header */}
         <h1 className="text-4xl font-bold text-gray-900 mb-6">Friendship Analytics</h1>
 
-        {/* Chart Container */}
         <div className="bg-white rounded-lg shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">By Interaction Type</h2>
 
-          {/* Check if there's data */}
           {chartData.every((item) => item.value === 0) ? (
             <div className="flex items-center justify-center h-80">
               <div className="text-center">
@@ -98,6 +98,7 @@ export default function Stats() {
                   paddingAngle={2}
                   dataKey="value"
                 >
+                  {/* Set color for each data segment */}
                   {chartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}

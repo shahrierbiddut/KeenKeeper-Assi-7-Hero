@@ -2,27 +2,29 @@ import React from "react";
 import { MdCall, MdMessage, MdVideoCall } from "react-icons/md";
 
 export default function QuickCheckIn({ friend, onCheckIn }) {
+  const capitalizeFirstLetter = (text) => {
+    let firstLetter = text.charAt(0);
+    let restOfLetters = text.slice(1);
+    return firstLetter.toUpperCase() + restOfLetters;
+  };
+
   const handleCheckIn = (type) => {
-    // Get friend name and create entry
     const timestamp = new Date();
+    const capitalizedType = capitalizeFirstLetter(type);
     const entry = {
       id: Date.now(),
       type: type,
-      title: `${type.charAt(0).toUpperCase() + type.slice(1)} with ${
-        friend.name
-      }`,
+      title: capitalizedType + " with " + friend.name,
       friendName: friend.name,
       friendId: friend.id,
       timestamp: timestamp.toISOString(),
     };
 
-    // Save to timeline in localStorage
     const existingTimeline = localStorage.getItem("timeline");
     const timeline = existingTimeline ? JSON.parse(existingTimeline) : [];
     timeline.push(entry);
     localStorage.setItem("timeline", JSON.stringify(timeline));
 
-    // Call parent handler (for toast notification)
     onCheckIn(type, friend.name);
   };
 

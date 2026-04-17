@@ -4,7 +4,6 @@ import { FaPlus } from 'react-icons/fa';
 const Banner = () => {
     return (
         <div>
-            {/* Top Section */}
             <div className='flex flex-col items-center justify-center md:mt-20 mt-10'>
                 <h2 className='font-bold md:text-4xl text-3xl'>
                     Friends to keep close in your life
@@ -23,10 +22,7 @@ const Banner = () => {
                 </button>
             </div>
 
-            {/* Cards Section */}
             <div className='max-w-7xl mx-auto px-6 grid md:grid-cols-4 grid-cols-2 gap-8 my-10 '>
-                
-                {/* Card 1 */}
                 <div className='rounded-xl shadow-md ring-1 ring-black/5 
                 text-center py-6 px-4 
                 transition-all duration-300 
@@ -37,7 +33,6 @@ const Banner = () => {
                     <p className='font-semibold text-gray-500'>Total Friends</p>
                 </div>
 
-                {/* Card 2 */}
                 <div className='rounded-xl shadow-md ring-1 ring-black/5 
                 text-center py-6 px-4 
                 transition-all duration-300 
@@ -48,7 +43,6 @@ const Banner = () => {
                     <p className='font-semibold text-gray-500'>On Track</p>
                 </div>
 
-                {/* Card 3 */}
                 <div className='rounded-xl shadow-md ring-1 ring-black/5 
                 text-center py-6 px-4 
                 transition-all duration-300 
@@ -59,7 +53,6 @@ const Banner = () => {
                     <p className='font-semibold text-gray-500'>Need Attention</p>
                 </div>
 
-                {/* Card 4 */}
                 <div className='rounded-xl shadow-md ring-1 ring-black/5 
                 text-center py-6 px-4 
                 transition-all duration-300 

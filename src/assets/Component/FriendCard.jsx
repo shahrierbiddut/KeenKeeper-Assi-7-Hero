@@ -4,15 +4,15 @@ export default function FriendCard({ friend }) {
   const navigate = useNavigate();
 
   const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case "overdue":
-        return "bg-red-500 text-white";
-      case "on-track":
-        return "bg-gray-800 text-white";
-      case "almost due":
-        return "bg-yellow-400 text-gray-800";
-      default:
-        return "bg-gray-300 text-gray-800";
+    const lowerStatus = status.toLowerCase();
+    if (lowerStatus === "overdue") {
+      return "bg-red-500 text-white";
+    } else if (lowerStatus === "on-track") {
+      return "bg-gray-800 text-white";
+    } else if (lowerStatus === "almost due") {
+      return "bg-yellow-400 text-gray-800";
+    } else {
+      return "bg-gray-300 text-gray-800";
     }
   };
 
@@ -25,7 +25,6 @@ export default function FriendCard({ friend }) {
       onClick={handleCardClick}
       className="bg-white rounded-xl shadow-md p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
     >
-      {/* Profile Picture */}
       <div className="flex justify-center mb-4">
         <img
           src={friend.picture}
@@ -34,18 +33,16 @@ export default function FriendCard({ friend }) {
         />
       </div>
 
-      {/* Name */}
       <h3 className="text-lg font-semibold text-gray-800 mb-2">
         {friend.name}
       </h3>
 
-      {/* Days Since Contact */}
       <p className="text-sm text-gray-500 mb-3">
         {friend.days_since_contact}d ago
       </p>
 
-      {/* Tags */}
       <div className="flex flex-wrap gap-2 justify-center mb-4">
+        {/* Display each tag as a badge */}
         {friend.tags.map((tag, index) => (
           <span
             key={index}
@@ -56,7 +53,6 @@ export default function FriendCard({ friend }) {
         ))}
       </div>
 
-      {/* Status Badge */}
       <button
         className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(
           friend.status

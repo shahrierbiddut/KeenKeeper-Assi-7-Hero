@@ -2,20 +2,22 @@ import React, { useEffect } from "react";
 
 export default function Toast({ message, type = "success", onClose }) {
   useEffect(() => {
+    // Timer to auto-close the toast after 4 seconds
     const timer = setTimeout(onClose, 4000);
+    
+    // Cleanup: Clear the timer if component unmounts before 4 seconds
     return () => clearTimeout(timer);
   }, [onClose]);
 
   const getStyles = () => {
-    switch (type) {
-      case "success":
-        return "bg-green-500 text-white";
-      case "error":
-        return "bg-red-500 text-white";
-      case "info":
-        return "bg-blue-500 text-white";
-      default:
-        return "bg-gray-500 text-white";
+    if (type === "success") {
+      return "bg-green-500 text-white";
+    } else if (type === "error") {
+      return "bg-red-500 text-white";
+    } else if (type === "info") {
+      return "bg-blue-500 text-white";
+    } else {
+      return "bg-gray-500 text-white";
     }
   };
 

@@ -8,11 +8,15 @@ export default function FriendsList() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
+        // Fetch friends data from JSON file
         const response = await fetch("/friends.json");
         const data = await response.json();
+        
+        // Store friends in state
         setFriends(data);
         setLoading(false);
       } catch (error) {
+        // Log any errors that occur during fetch
         console.error("Error loading friends:", error);
         setLoading(false);
       }
@@ -30,8 +34,8 @@ export default function FriendsList() {
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-gray-900 mb-8">Your Friends</h2>
 
-        {/* 4-Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Loop through each friend and display a card */}
           {friends.map((friend) => (
             <FriendCard key={friend.id} friend={friend} />
           ))}

@@ -10,14 +10,11 @@ export default function Navbar() {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          
-          {/* Logo */}
           <Link to="/" className="flex items-center text-3xl font-bold text-gray-800">
             <span className="font-bold text-black">Keen</span>
             <span className="font-semibold text-[#244D3F]">Keeper</span>
           </Link>
 
-          {/* Links */}
           <div className="flex items-center gap-8">
             {navLinks.map((item) => {
               const Icon = item.icon;
@@ -38,7 +35,6 @@ export default function Navbar() {
               );
             })}
           </div>
-
         </div>
       </div>
     </nav>

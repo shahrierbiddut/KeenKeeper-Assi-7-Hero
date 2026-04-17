@@ -1,88 +1,82 @@
 import { useEffect, useState } from "react";
 import { MdCall, MdMessage, MdVideoCall, MdDelete } from "react-icons/md";
 
-/**
- * Timeline Component
- * Displays all check-ins (calls, texts, videos) in chronological order
- * Data is loaded from localStorage
- */
 export default function Timeline() {
-  // State to store all timeline entries
   const [timelineEntries, setTimelineEntries] = useState([]);
-  // State to track loading status
   const [loading, setLoading] = useState(true);
+  const [filterType, setFilterType] = useState("all");
 
-  /**
-   * Load timeline entries from localStorage
-   */
   const loadTimeline = () => {
     const allEntries = [];
-
-    // Get timeline entries that were created
     const savedTimeline = localStorage.getItem("timeline");
+    
     if (savedTimeline) {
       const parsedTimeline = JSON.parse(savedTimeline);
-      allEntries.push(...parsedTimeline);
+      for (let i = 0; i < parsedTimeline.length; i++) {
+        allEntries.push(parsedTimeline[i]);
+      }
     }
-
-    // Sort entries by date - newest first
-    allEntries.sort(
-      (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
-    );
-
-    // Update state with fetched data
+    
+    allEntries.sort((a, b) => {
+      const dateA = new Date(b.timestamp);
+      const dateB = new Date(a.timestamp);
+      return dateA - dateB;
+    });
+    
     setTimelineEntries(allEntries);
     setLoading(false);
   };
 
-  /**
-   * useEffect Hook - Runs once when component loads
-   * Fetches all timeline entries from localStorage and sorts them
-   */
   useEffect(() => {
     loadTimeline();
   }, []);
 
-  /**
-   * Delete a timeline entry by ID
-   */
   const handleDelete = (entryId) => {
-    // Get current timeline from localStorage
     const savedTimeline = localStorage.getItem("timeline");
     if (savedTimeline) {
       const parsedTimeline = JSON.parse(savedTimeline);
-      // Filter out the entry with matching ID
-      const updatedTimeline = parsedTimeline.filter(
-        (entry) => entry.id !== entryId
-      );
-      // Save updated timeline back to localStorage
+      const updatedTimeline = [];
+      
+      for (let i = 0; i < parsedTimeline.length; i++) {
+        const entry = parsedTimeline[i];
+        if (entry.id !== entryId) {
+          updatedTimeline.push(entry);
+        }
+      }
+      
       localStorage.setItem("timeline", JSON.stringify(updatedTimeline));
     }
-    // Reload timeline to reflect changes
     loadTimeline();
   };
 
-  /**
-   * Helper Function - Returns readable label for check-in type
-   * "call" -> "Call", "text" -> "Text", "video" -> "Video"
-   */
   const getTypeLabel = (type) => {
-    switch (type.toLowerCase()) {
-      case "call":
-        return "Call";
-      case "text":
-        return "Text";
-      case "video":
-        return "Video";
-      default:
-        return "Check-in";
+    const lowerType = type.toLowerCase();
+    if (lowerType === "call") {
+      return "Call";
+    } else if (lowerType === "text") {
+      return "Text";
+    } else if (lowerType === "video") {
+      return "Video";
+    } else {
+      return "Check-in";
     }
   };
 
-  /**
-   * Loading State
-   * Shows loading message while fetching data
-   */
+  const getFilteredEntries = () => {
+    if (filterType === "all") {
+      return timelineEntries;
+    } else {
+      const filteredList = [];
+      for (let i = 0; i < timelineEntries.length; i++) {
+        const entry = timelineEntries[i];
+        if (entry.type === filterType) {
+          filteredList.push(entry);
+        }
+      }
+      return filteredList;
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -91,23 +85,21 @@ export default function Timeline() {
     );
   }
 
-  /**
-   * Main Render
-   * Displays header and list of all timeline entries
-   */
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className="bg-gray-50 py-8 px-6">
       <div className="max-w-4xl mx-auto">
-        {/* Page Header */}
         <h1 className="text-4xl font-bold text-gray-900 mb-2">Timeline</h1>
         <p className="text-gray-600 font-semibold mb-8">
           View your interaction history with friends.
         </p>
 
-        {/* Filter Dropdown */}
         <div className="mb-8">
-          <select className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:border-gray-400 focus:outline-none">
-            <option>Filter timeline</option>
+          <select 
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:border-gray-400 focus:outline-none cursor-pointer"
+          >
+            <option value="all">Filter timeline</option>
             <option value="all">All</option>
             <option value="call">Calls</option>
             <option value="text">Texts</option>
@@ -115,32 +107,25 @@ export default function Timeline() {
           </select>
         </div>
 
-        {/* Timeline Container - Shows all entries in list format */}
         <div className="space-y-6">
-          {/* Empty State - Shows when no entries exist */}
-          {timelineEntries.length === 0 ? (
+          {getFilteredEntries().length === 0 ? (
             <div className="bg-white rounded-lg shadow p-12 text-center">
               <p className="text-lg font-semibold text-gray-600">
-                No timeline entries yet
+                {timelineEntries.length === 0 ? "No timeline entries yet" : "No entries found for this filter"}
               </p>
               <p className="text-gray-500 mt-2">
-                Start adding check-ins from friend details pages to see them here
+                {timelineEntries.length === 0 ? "Start adding check-ins from friend details pages to see them here" : "Try selecting a different filter"}
               </p>
             </div>
           ) : (
-            /**
-             * Loop through all entries and display each one
-             * map() function iterates over timelineEntries array
-             */
-            timelineEntries.map((entry, index) => (
+            // Display each timeline entry
+            getFilteredEntries().map((entry, index) => (
               <div
                 key={index}
                 className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition"
               >
                 <div className="flex items-start gap-4 justify-between">
-                  {/* Left and Center Section */}
                   <div className="flex items-start gap-4 flex-1">
-                    {/* Left Section - Icon */}
                     <div className="text-3xl shrink-0">
                       {entry.type === "call" && "☎️"}
                       {entry.type === "text" && "💬"}
@@ -148,14 +133,10 @@ export default function Timeline() {
                       {!["call", "text", "video"].includes(entry.type) && "👥"}
                     </div>
 
-                    {/* Center Section - Title and Details */}
                     <div className="flex-1">
-                      {/* Title: "Call with Alex Johnson" */}
                       <h3 className="text-base font-bold text-gray-900">
                         {entry.title || `${getTypeLabel(entry.type)} with ${entry.friendName || "Friend"}`}
                       </h3>
-                      
-                      {/* Date */}
                       <p className="text-xs text-gray-600 mt-1">
                         {new Date(entry.timestamp).toLocaleDateString("en-US", {
                           year: "numeric",
@@ -166,7 +147,6 @@ export default function Timeline() {
                     </div>
                   </div>
 
-                  {/* Right Section - Delete Button */}
                   <button
                     onClick={() => handleDelete(entry.id)}
                     className="shrink-0 text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition"
