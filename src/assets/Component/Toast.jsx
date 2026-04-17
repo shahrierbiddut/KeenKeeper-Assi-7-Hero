@@ -21,7 +21,7 @@ export default function Toast({ message, type = "success", onClose }) {
 
   return (
     <div
-      className={`fixed bottom-8 right-8 px-6 py-4 rounded-lg shadow-lg font-semibold animate-pulse z-50 ${getStyles()}`}
+      className={`fixed top-8 right-8 px-6 py-4 rounded-lg shadow-lg font-semibold animate-pulse z-50 ${getStyles()}`}
     >
       {message}
     </div>

@@ -23,7 +23,7 @@ export default function FriendCard({ friend }) {
   return (
     <div
       onClick={handleCardClick}
-      className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition cursor-pointer text-center"
+      className="bg-white rounded-xl shadow-md p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
     >
       {/* Profile Picture */}
       <div className="flex justify-center mb-4">

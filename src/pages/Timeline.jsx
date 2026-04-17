@@ -13,14 +13,6 @@ export default function Timeline() {
   const [loading, setLoading] = useState(true);
 
   /**
-   * useEffect Hook - Runs once when component loads
-   * Fetches all timeline entries from localStorage and sorts them
-   */
-  useEffect(() => {
-    loadTimeline();
-  }, []);
-
-  /**
    * Load timeline entries from localStorage
    */
   const loadTimeline = () => {
@@ -42,6 +34,14 @@ export default function Timeline() {
     setTimelineEntries(allEntries);
     setLoading(false);
   };
+
+  /**
+   * useEffect Hook - Runs once when component loads
+   * Fetches all timeline entries from localStorage and sorts them
+   */
+  useEffect(() => {
+    loadTimeline();
+  }, []);
 
   /**
    * Delete a timeline entry by ID

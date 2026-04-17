@@ -44,7 +44,7 @@ export default function FriendDetailsView() {
     }
   };
 
-  const handleCheckIn = (type, friendName) => {
+  const handleCheckIn = (type) => {
     // Show toast notification
     setToast({
       message: `✓ ${type.charAt(0).toUpperCase() + type.slice(1)} added to timeline!`,

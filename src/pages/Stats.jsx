@@ -65,14 +65,14 @@ export default function Stats() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className="bg-gray-50 py-8 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Friendship Analytics</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-6">Friendship Analytics</h1>
 
         {/* Chart Container */}
-        <div className="bg-white rounded-lg shadow-lg p-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">By Interaction Type</h2>
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">By Interaction Type</h2>
 
           {/* Check if there's data */}
           {chartData.every((item) => item.value === 0) ? (
