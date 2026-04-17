@@ -98,7 +98,7 @@ export default function Stats() {
                   paddingAngle={2}
                   dataKey="value"
                 >
-                  {/* Set color for each data segment */}
+                  {/* Set color */}
                   {chartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}

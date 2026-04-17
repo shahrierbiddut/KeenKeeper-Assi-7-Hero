@@ -118,7 +118,7 @@ export default function Timeline() {
               </p>
             </div>
           ) : (
-            // Display each timeline entry
+            // Display timeline
             getFilteredEntries().map((entry, index) => (
               <div
                 key={index}

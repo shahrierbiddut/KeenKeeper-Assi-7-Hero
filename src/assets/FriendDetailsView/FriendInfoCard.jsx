@@ -24,7 +24,7 @@ export default function FriendInfoCard({ friend }) {
       </div>
 
       <div className="mb-6 flex flex-wrap gap-2 justify-center">
-        {/* Display each tag as a label */}
+        {/* Display tags */}
         {friend.tags.map((tag, index) => (
           <span
             key={index}

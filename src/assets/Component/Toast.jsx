@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 
 export default function Toast({ message, type = "success", onClose }) {
   useEffect(() => {
-    // Timer to auto-close the toast after 4 seconds
+    // Timer
     const timer = setTimeout(onClose, 4000);
     
-    // Cleanup: Clear the timer if component unmounts before 4 seconds
+    // Clear the timer 
     return () => clearTimeout(timer);
   }, [onClose]);
 

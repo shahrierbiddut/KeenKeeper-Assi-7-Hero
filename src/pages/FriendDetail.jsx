@@ -57,7 +57,7 @@ export default function FriendDetail() {
   }
 
   const handleCheckIn = (type) => {
-    // Add timeline entry for the check-in
+    // Add timeline
     const timelineEntry = {
       id: Date.now(),
       friendId: friend.id,
@@ -65,7 +65,7 @@ export default function FriendDetail() {
       timestamp: new Date().toISOString(),
     };
     console.log("Check-in recorded:", timelineEntry);
-    // TODO: Send to Timeline page or update timeline
+    // Timeline page 
   };
 
   return (
@@ -80,7 +80,7 @@ export default function FriendDetail() {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Friend Info Card */}
+          {/* Friend Card */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
               {/* Profile Picture */}
@@ -159,7 +159,7 @@ export default function FriendDetail() {
             </div>
           </div>
 
-          {/* Right Column - Stats & Actions */}
+          {/* Stats & Actions */}
           <div className="lg:col-span-2 space-y-6">
             {/* Stats Cards */}
             <div className="grid grid-cols-3 gap-4">
@@ -187,7 +187,7 @@ export default function FriendDetail() {
               </div>
             </div>
 
-            {/* Relationship Goal Card */}
+            {/* Relationship Card */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">
@@ -202,7 +202,7 @@ export default function FriendDetail() {
               </p>
             </div>
 
-            {/* Quick Check-In Card */}
+            {/* Quick Check Card */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Quick Check-In

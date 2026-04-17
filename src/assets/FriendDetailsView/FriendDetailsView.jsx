@@ -18,11 +18,11 @@ export default function FriendDetailsView() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        // Fetch all friends from JSON file
+        // Fetch JSON file
         const response = await fetch("/friends.json");
         const data = await response.json();
         
-        // Find the friend with matching ID
+        // Find the friend
         const foundFriend = data.find((f) => f.id === parseInt(id));
         setFriend(foundFriend);
         setLoading(false);

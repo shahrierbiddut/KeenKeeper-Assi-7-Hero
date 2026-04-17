@@ -42,7 +42,7 @@ export default function FriendCard({ friend }) {
       </p>
 
       <div className="flex flex-wrap gap-2 justify-center mb-4">
-        {/* Display each tag as a badge */}
+        {/* Display badge */}
         {friend.tags.map((tag, index) => (
           <span
             key={index}
