@@ -82,9 +82,9 @@ export default function FriendDetailsView() {
         {/* Back Button */}
         <button
           onClick={() => navigate("/")}
-          className="mb-8 px-6 py-2 bg-gray-400 text-gray-900 rounded-lg hover:bg-gray-500 transition font-semibold shadow"
+          className="mb-8 px-3 py-1 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition text-sm font-medium"
         >
-          ← Back to Friends
+          Back to Friends
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
