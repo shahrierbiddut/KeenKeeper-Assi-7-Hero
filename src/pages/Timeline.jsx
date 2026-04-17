@@ -5,6 +5,7 @@ export default function Timeline() {
   const [timelineEntries, setTimelineEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const loadTimeline = () => {
     const allEntries = [];
@@ -17,6 +18,7 @@ export default function Timeline() {
       }
     }
     
+    // Sort entries by date
     allEntries.sort((a, b) => {
       const dateA = new Date(b.timestamp);
       const dateB = new Date(a.timestamp);
@@ -63,17 +65,39 @@ export default function Timeline() {
   };
 
   const getFilteredEntries = () => {
-    if (filterType === "all") {
-      return timelineEntries;
-    } else {
-      const filteredList = [];
+    // filter type
+    let filtered = timelineEntries;
+    if (filterType !== "all") {
+      const typeFiltered = [];
       for (let i = 0; i < timelineEntries.length; i++) {
         const entry = timelineEntries[i];
         if (entry.type === filterType) {
-          filteredList.push(entry);
+          typeFiltered.push(entry);
         }
       }
-      return filteredList;
+      filtered = typeFiltered;
+    }
+
+    // search query
+    if (searchQuery.trim() === "") {
+      
+      return filtered;
+    } else {
+      // Search type
+      const searchLower = searchQuery.toLowerCase();
+      const searchFiltered = [];
+      for (let i = 0; i < filtered.length; i++) {
+        const entry = filtered[i];
+
+        const friendName = entry.friendName ? entry.friendName.toLowerCase() : "";
+        const entryType = entry.type ? entry.type.toLowerCase() : "";
+        
+        // search matches 
+        if (friendName.includes(searchLower) || entryType.includes(searchLower)) {
+          searchFiltered.push(entry);
+        }
+      }
+      return searchFiltered;
     }
   };
 
@@ -93,11 +117,11 @@ export default function Timeline() {
           View your interaction history with friends.
         </p>
 
-        <div className="mb-8">
+        <div className="mb-8 flex gap-4">
           <select 
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:border-gray-400 focus:outline-none cursor-pointer"
+            className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm text-gray-700 bg-white hover:border-gray-400 focus:outline-none cursor-pointer w-1/3"
           >
             <option value="all">Filter timeline</option>
             <option value="all">All</option>
@@ -105,6 +129,13 @@ export default function Timeline() {
             <option value="text">Texts</option>
             <option value="video">Videos</option>
           </select>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1 px-2 py-1 border border-gray-300 rounded-lg text-xs text-gray-700 bg-white hover:border-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          />
         </div>
 
         <div className="space-y-6">
@@ -127,6 +158,7 @@ export default function Timeline() {
                 <div className="flex items-start gap-4 justify-between">
                   <div className="flex items-start gap-4 flex-1">
                     <div className="text-3xl shrink-0">
+                      {/* Show emoji */}
                       {entry.type === "call" && "☎️"}
                       {entry.type === "text" && "💬"}
                       {entry.type === "video" && "📹"}
