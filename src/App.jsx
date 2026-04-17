@@ -19,6 +19,7 @@ function App() {
           <Route path="/friend/:id" element={<FriendDetailsView />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/stats" element={<Stats />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
