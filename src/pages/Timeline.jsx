@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MdCall, MdMessage, MdVideoCall } from "react-icons/md";
+import { MdCall, MdMessage, MdVideoCall, MdDelete } from "react-icons/md";
 
 /**
  * Timeline Component
@@ -17,6 +17,13 @@ export default function Timeline() {
    * Fetches all timeline entries from localStorage and sorts them
    */
   useEffect(() => {
+    loadTimeline();
+  }, []);
+
+  /**
+   * Load timeline entries from localStorage
+   */
+  const loadTimeline = () => {
     const allEntries = [];
 
     // Get timeline entries that were created
@@ -34,7 +41,26 @@ export default function Timeline() {
     // Update state with fetched data
     setTimelineEntries(allEntries);
     setLoading(false);
-  }, []);
+  };
+
+  /**
+   * Delete a timeline entry by ID
+   */
+  const handleDelete = (entryId) => {
+    // Get current timeline from localStorage
+    const savedTimeline = localStorage.getItem("timeline");
+    if (savedTimeline) {
+      const parsedTimeline = JSON.parse(savedTimeline);
+      // Filter out the entry with matching ID
+      const updatedTimeline = parsedTimeline.filter(
+        (entry) => entry.id !== entryId
+      );
+      // Save updated timeline back to localStorage
+      localStorage.setItem("timeline", JSON.stringify(updatedTimeline));
+    }
+    // Reload timeline to reflect changes
+    loadTimeline();
+  };
 
   /**
    * Helper Function - Returns readable label for check-in type
@@ -111,31 +137,43 @@ export default function Timeline() {
                 key={index}
                 className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition"
               >
-                <div className="flex items-start gap-4">
-                  {/* Left Section - Icon */}
-                  <div className="text-3xl shrink-0">
-                    {entry.type === "call" && "☎️"}
-                    {entry.type === "text" && "💬"}
-                    {entry.type === "video" && "📹"}
-                    {!["call", "text", "video"].includes(entry.type) && "👥"}
+                <div className="flex items-start gap-4 justify-between">
+                  {/* Left and Center Section */}
+                  <div className="flex items-start gap-4 flex-1">
+                    {/* Left Section - Icon */}
+                    <div className="text-3xl shrink-0">
+                      {entry.type === "call" && "☎️"}
+                      {entry.type === "text" && "💬"}
+                      {entry.type === "video" && "📹"}
+                      {!["call", "text", "video"].includes(entry.type) && "👥"}
+                    </div>
+
+                    {/* Center Section - Title and Details */}
+                    <div className="flex-1">
+                      {/* Title: "Call with Alex Johnson" */}
+                      <h3 className="text-base font-bold text-gray-900">
+                        {entry.title || `${getTypeLabel(entry.type)} with ${entry.friendName || "Friend"}`}
+                      </h3>
+                      
+                      {/* Date */}
+                      <p className="text-xs text-gray-600 mt-1">
+                        {new Date(entry.timestamp).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Center Section - Title and Details */}
-                  <div className="flex-1">
-                    {/* Title: "Call with Alex Johnson" */}
-                    <h3 className="text-base font-bold text-gray-900">
-                      {entry.title || `${getTypeLabel(entry.type)} with ${entry.friendName || "Friend"}`}
-                    </h3>
-                    
-                    {/* Date */}
-                    <p className="text-xs text-gray-600 mt-1">
-                      {new Date(entry.timestamp).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
+                  {/* Right Section - Delete Button */}
+                  <button
+                    onClick={() => handleDelete(entry.id)}
+                    className="shrink-0 text-red-500 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition"
+                    title="Delete entry"
+                  >
+                    <MdDelete size={20} />
+                  </button>
                 </div>
               </div>
             ))

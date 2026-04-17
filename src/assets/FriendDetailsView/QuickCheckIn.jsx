@@ -1,10 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { MdCall, MdMessage, MdVideoCall } from "react-icons/md";
 
 export default function QuickCheckIn({ friend, onCheckIn }) {
-  const navigate = useNavigate();
-
   const handleCheckIn = (type) => {
     // Get friend name and create entry
     const timestamp = new Date();
@@ -27,11 +24,6 @@ export default function QuickCheckIn({ friend, onCheckIn }) {
 
     // Call parent handler (for toast notification)
     onCheckIn(type, friend.name);
-
-    // Navigate to Timeline page after 1.5 seconds
-    setTimeout(() => {
-      navigate("/timeline");
-    }, 1500);
   };
 
   return (
